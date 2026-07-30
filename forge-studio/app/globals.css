@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Colors — values from tokens/design-tokens.css */
+  --color-primary: hsl(210, 82%, 27%);
+  --color-on-primary: hsl(0, 0%, 100%);
+  --color-primary-container: hsl(217, 100%, 82%);
+  --color-on-primary-container: hsl(210, 77%, 28%);
+  --color-secondary: hsl(163, 100%, 21%);
+  --color-on-secondary: hsl(0, 0%, 100%);
+  --color-secondary-container: hsl(157, 61%, 63%);
+  --color-on-secondary-container: hsl(163, 100%, 16%);
+  --color-tertiary: hsl(38, 100%, 26%);
+  --color-on-tertiary: hsl(0, 0%, 100%);
+  --color-tertiary-container: hsl(34, 100%, 68%);
+  --color-on-tertiary-container: hsl(37, 100%, 20%);
+  --color-error: hsl(354, 100%, 38%);
+  --color-on-error: hsl(0, 0%, 100%);
+  --color-error-container: hsl(6, 100%, 84%);
+  --color-on-error-container: hsl(356, 100%, 29%);
+  --color-background: hsl(0, 9%, 98%);
+  --color-on-background: hsl(180, 4%, 11%);
+  --color-surface: hsl(0, 9%, 98%);
+  --color-on-surface: hsl(180, 4%, 11%);
+  --color-surface-variant: hsl(0, 0%, 89%);
+  --color-on-surface-variant: hsl(180, 1%, 27%);
+  --color-outline: hsl(180, 0%, 46%);
+  --color-outline-variant: hsl(240, 1%, 78%);
+  --color-inverse-surface: hsl(180, 2%, 19%);
+  --color-inverse-on-surface: hsl(0, 3%, 94%);
+  --color-inverse-primary: hsl(217, 100%, 82%);
+  --color-surface-dim: hsl(0, 0%, 85%);
+  --color-surface-bright: hsl(0, 9%, 98%);
+  --color-surface-container-lowest: hsl(0, 0%, 100%);
+  --color-surface-container-low: hsl(0, 4%, 95%);
+  --color-surface-container: hsl(60, 3%, 93%);
+  --color-surface-container-high: hsl(0, 2%, 91%);
+  --color-surface-container-highest: hsl(0, 3%, 94%);
+
+  /* Typography families */
+  --font-display: "Geist", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* Spacing */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-7: 1.75rem;
+  --spacing-8: 2rem;
+  --spacing-9: 2.25rem;
+  --spacing-10: 2.5rem;
+  --spacing-11: 2.75rem;
+  --spacing-12: 3rem;
+  --spacing-14: 3.5rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-28: 7rem;
+  --spacing-32: 8rem;
+  --spacing-36: 9rem;
+  --spacing-40: 10rem;
+  --spacing-44: 11rem;
+  --spacing-48: 12rem;
+  --spacing-52: 13rem;
+  --spacing-56: 14rem;
+  --spacing-60: 15rem;
+  --spacing-64: 16rem;
+  --spacing-72: 18rem;
+  --spacing-80: 20rem;
+  --spacing-96: 24rem;
+  --spacing-px: 1px;
+
+  /* Border radius */
+  --radius-none: 0;
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.10), 0 8px 10px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  /* Elevation */
+  --elevation-0: none;
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.10), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --elevation-3: 0 6px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --elevation-4: 0 10px 20px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.06);
+  --elevation-5: 0 15px 30px rgba(0, 0, 0, 0.14), 0 5px 10px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  font-family: var(--font-body), sans-serif;
+  color: hsl(180, 4%, 11%);
+  background-color: hsl(0, 9%, 98%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

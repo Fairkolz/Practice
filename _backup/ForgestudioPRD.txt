@@ -1,0 +1,94 @@
+PRD - FORGE STUDIO WEBSITE
+
+
+OVERVIEW
+Forge Studio is a creative digital agency (UI/UX Design, Website Development,
+Branding, Product Design). This PRD covers a 7-page marketing website to
+showcase services/portfolio, build trust, and generate leads.
+
+Audience: Startups, small businesses, entrepreneurs seeking design/dev services.
+
+
+SCOPE
+In: 7-page responsive site, placeholder content/images, Contact form lead
+capture, modern flat design with subtle animation.
+
+Out: Auth, e-commerce, payments, dashboards, CMS/backend, blog (future phase).
+
+
+PAGES
+Home         - Hero, Services, Portfolio Preview, Testimonials, CTA, Footer
+About        - Story, team, values, process
+Services     - UI/UX Design, Web Dev, Branding, Product Design
+Portfolio    - Project grid (placeholder case studies)
+Testimonials - Client quotes
+FAQ          - Accordion Q&A
+Contact      - Lead form + business details
+
+
+FUNCTIONAL REQUIREMENTS
+- All 7 pages with consistent nav (header/footer) - MUST
+- Contact form: name, email, message, service interest - MUST
+- Form submits via Formspree (endpoint stored in NEXT_PUBLIC_FORMSPREE_ENDPOINT
+  env var, not hardcoded) - MUST
+- Fully responsive (mobile to desktop) - MUST
+- FAQ accordion - SHOULD
+- Portfolio filtering by category - COULD
+- Subtle scroll/hover animations - SHOULD
+- Placeholder content until real assets provided - MUST
+
+
+NON-FUNCTIONAL REQUIREMENTS
+- Load time under 2s, optimized images
+- WCAG 2.1 AA accessibility (semantic HTML, alt text, contrast, keyboard nav)
+- Responsive 320px to 1920px+
+- Latest 2 versions of major browsers
+- SEO: semantic structure, meta tags, page titles
+- Component-based, reusable architecture
+- Failed/incomplete tasks return a plain-English error, never fail silently
+
+
+DESIGN REQUIREMENTS
+- Clean, minimal, flat, professional; generous white space
+- Rounded corners, consistent cards/buttons
+- Subtle animation only (fade-ins, hover, scroll reveals)
+- Max 2 typefaces, clear hierarchy
+- Reusable component system (buttons, cards, sections, form fields)
+- Colors/spacing/typography sourced from design tokens (not invented)
+
+
+TECH STACK
+Framework        - Next.js (React) + TypeScript
+Styling          - Tailwind CSS
+Animation        - Framer Motion
+Forms            - Formspree
+Images           - next/image
+Deployment       - Vercel
+Version Control  - Git + GitHub
+
+
+CONSTRAINTS
+- No auth, cart, payment, or dashboard features
+- No visual clutter; placeholders must look realistic, not generic Lorem Ipsum
+- Errors surfaced in plain English, not hidden
+
+SUCCESS METRICS
+- Contact form submissions
+- Session duration / bounce rate
+- Page load speed (Core Web Vitals)
+- Mobile vs. desktop engagement parity
+- Portfolio/Services click-through from Home
+
+
+OPEN QUESTIONS
+- Final brand assets (logo, colors, type) - pending
+- Real portfolio/testimonials - currently placeholder
+- Formspree account/endpoint to be created before launch
+- Future CMS/blog phase - not yet decided
+- Domain/hosting details for deployment
+
+
+ASSUMPTIONS
+- Phase 1 only; CMS/blog is a future consideration
+- Placeholder content replaced by Forge Studio before launch
+- English-language site for this phase
