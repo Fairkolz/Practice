@@ -93,9 +93,9 @@ export default function HomePage() {
                 text: "Data-driven optimization and marketing technology integration to scale your user base aggressively.",
               },
             ].map((item, i) => (
-              <Reveal key={item.title} delay={i * 0.1}>
+              <Reveal key={item.title} delay={i * 0.1} className="h-full">
               <div
-                className="rounded-xl border border-outline-variant bg-surface-container-lowest p-8 transition-all hover:shadow-elevation-3 hover:-translate-y-0.5"
+                className="flex h-full flex-col rounded-xl border border-outline-variant bg-surface-container-lowest p-8 transition-all hover:shadow-elevation-3 hover:-translate-y-0.5"
               >
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-md bg-surface-container-high text-primary">
                   {item.icon}
