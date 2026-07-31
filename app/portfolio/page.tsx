@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 
 const categories = ["All Work", "Fintech", "Lifestyle", "E-commerce", "SaaS"] as const;
@@ -9,15 +10,16 @@ type Category = (typeof categories)[number];
 interface Project {
   name: string;
   category: Exclude<Category, "All Work">;
+  image: string;
 }
 
 const projects: Project[] = [
-  { name: "Aura Living", category: "Lifestyle" },
-  { name: "Vertex Analytics", category: "Fintech" },
-  { name: "Nexus Commerce", category: "E-commerce" },
-  { name: "Orbit Dashboard", category: "SaaS" },
-  { name: "Meridian Health", category: "Lifestyle" },
-  { name: "CryptoFlow", category: "Fintech" },
+  { name: "Aura Living", category: "Lifestyle", image: "/images/portfolio-aura-living.jpg" },
+  { name: "Vertex Analytics", category: "Fintech", image: "/images/portfolio-vertex.jpg" },
+  { name: "Nexus Commerce", category: "E-commerce", image: "/images/portfolio-nexus.jpg" },
+  { name: "Orbit Dashboard", category: "SaaS", image: "/images/portfolio-orbit.jpg" },
+  { name: "Meridian Health", category: "Lifestyle", image: "/images/portfolio-meridian.jpg" },
+  { name: "CryptoFlow", category: "Fintech", image: "/images/portfolio-cryptoflow.jpg" },
 ];
 
 export default function PortfolioPage() {
@@ -66,7 +68,13 @@ export default function PortfolioPage() {
                 key={project.name}
                 className="group relative aspect-[16/11] cursor-pointer overflow-hidden rounded-xl"
               >
-                <div className="h-full w-full bg-surface-container-high transition-transform duration-500 group-hover:scale-105" />
+                <Image
+                  src={project.image}
+                  alt={`${project.name} — ${project.category} project`}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[hsla(210,82%,15%,0.8)] via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-on-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <div className="mb-1 text-label-large uppercase opacity-80">{project.category}</div>

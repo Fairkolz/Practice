@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Accordion from "@/components/ui/Accordion";
 import Reveal from "@/components/ui/Reveal";
 
@@ -16,6 +17,7 @@ const competencies = [
     title: "Web Design & Strategy",
     text: "High-performance websites that convert. We align aesthetic excellence with strategic business goals to create landing pages and enterprise portals that perform.",
     items: ["UI/UX Information Architecture", "Conversion Rate Optimization", "Scalable Design Systems"],
+    image: "/images/service-web-design.jpg",
   },
   {
     icon: (
@@ -26,6 +28,7 @@ const competencies = [
     title: "Mobile App Development",
     text: "Native and cross-platform solutions built for the modern hand. We prioritize fluid animations, intuitive gestures, and seamless offline functionality.",
     items: ["iOS & Android Native Dev", "Flutter & React Native Solutions", "Wearable Technology Integration"],
+    image: "/images/service-mobile-app.jpg",
   },
   {
     icon: (
@@ -36,6 +39,7 @@ const competencies = [
     title: "Identity & Branding",
     text: "Forging visual identities that endure. From logo marks to complete brand books, we define the visual language that speaks your brand's core truth.",
     items: ["Logo & Visual Systems", "Brand Voice & Narrative", "Motion Branding & Guidelines"],
+    image: "/images/service-branding.jpg",
   },
   {
     icon: (
@@ -46,6 +50,7 @@ const competencies = [
     title: "Digital Marketing",
     text: "Amplifying your reach through data-driven campaigns. We connect your story with the right audience using advanced analytics and creative media buying.",
     items: ["Performance Marketing", "SEO & Content Strategy", "Advanced Data Analytics"],
+    image: "/images/service-marketing.jpg",
   },
 ];
 
@@ -146,7 +151,15 @@ export default function ServicesPage() {
                     ))}
                   </ul>
                 </div>
-                <div className="aspect-[16/9] w-full bg-surface-container-high" />
+                <div className="relative aspect-[16/9] w-full">
+                  <Image
+                    src={comp.image}
+                    alt={comp.title}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
               </div>
             ))}
           </div>

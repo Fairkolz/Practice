@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Reveal from "@/components/ui/Reveal";
@@ -51,16 +52,19 @@ const team = [
     name: "Julian Thorne",
     role: "Founder & Chief Creative Officer",
     bio: "A pioneer in user-centric design with over two decades of experience shaping global digital products.",
+    image: "/images/team-julian.jpg",
   },
   {
     name: "Elena Rodriguez",
     role: "Head of Technology",
     bio: "Architect of complex enterprise systems, dedicated to pushing the boundaries of what's technically possible.",
+    image: "/images/team-elena.jpg",
   },
   {
     name: "Marcus Chen",
     role: "Director of Strategy",
     bio: "Helping organizations navigate the digital landscape through data-driven insights and radical vision.",
+    image: "/images/team-marcus.jpg",
   },
 ];
 
@@ -166,7 +170,15 @@ export default function AboutPage() {
           <div className="grid gap-8 md:grid-cols-3">
             {team.map((member) => (
               <div key={member.name}>
-                <div className="mb-5 aspect-[3/4] w-full rounded-xl bg-surface-container-high" />
+                <div className="relative mb-5 aspect-[3/4] w-full overflow-hidden rounded-xl">
+                  <Image
+                    src={member.image}
+                    alt={`Portrait of ${member.name}, ${member.role}`}
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
                 <h3 className="mb-1 text-title-medium font-semibold text-on-surface">{member.name}</h3>
                 <p className="mb-3 text-label-large uppercase text-on-surface-variant">{member.role}</p>
                 <p className="text-body-medium text-on-surface-variant">{member.bio}</p>

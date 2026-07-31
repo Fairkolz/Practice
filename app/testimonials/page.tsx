@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
@@ -97,7 +98,15 @@ export default function TestimonialsPage() {
       <section className="bg-surface-container-low py-24">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid items-center gap-12 md:grid-cols-2">
-            <div className="aspect-[3/4] w-full rounded-xl bg-surface-container-high" />
+            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl">
+              <Image
+                src="/images/portfolio-vertex.jpg"
+                alt="Analytics dashboard interface from the featured Quantum Systems case study"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
             <div>
               <div className="mb-5 inline-flex items-center gap-2 text-label-large uppercase text-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">

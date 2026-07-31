@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Accordion from "@/components/ui/Accordion";
 import Reveal from "@/components/ui/Reveal";
 
@@ -272,7 +273,15 @@ export default function FaqPage() {
 
               {/* Contact Info */}
               <div className="mt-12 space-y-8">
-                <div className="aspect-[16/10] w-full rounded-xl bg-surface-container-high" />
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl">
+                  <Image
+                    src="/images/faq-office.jpg"
+                    alt="Forge Studio office workspace"
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
 
                 <div className="grid grid-cols-2 gap-8">
                   <div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 
 export default function HomePage() {
@@ -35,7 +36,16 @@ export default function HomePage() {
                 </a>
               </div>
             </div>
-            <div className="aspect-[4/3] rounded-xl bg-surface-container-high" />
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/images/hero.jpg"
+                alt="The Forge Studio team collaborating in a modern creative studio"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+                priority
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -122,16 +132,22 @@ export default function HomePage() {
           </div>
           <div className="grid gap-6 md:grid-cols-2">
             {[
-              { category: "Fintech", name: "NeuraFlow Platform", desc: "Revolutionizing automated wealth management for the next generation of investors." },
-              { category: "Luxury E-Commerce", name: "Aura Couture" },
-              { category: "SaaS", name: "Synergy AI" },
-              { category: "Environmental Tech", name: "TerraScan Interactive" },
+              { category: "Fintech", name: "NeuraFlow Platform", desc: "Revolutionizing automated wealth management for the next generation of investors.", image: "/images/work-neuraflow.jpg" },
+              { category: "Luxury E-Commerce", name: "Aura Couture", image: "/images/work-aura-couture.jpg" },
+              { category: "SaaS", name: "Synergy AI", image: "/images/work-synergy-ai.jpg" },
+              { category: "Environmental Tech", name: "TerraScan Interactive", image: "/images/work-terrascan.jpg" },
             ].map((item) => (
               <div
                 key={item.name}
                 className="group relative aspect-[16/10] cursor-pointer overflow-hidden rounded-xl"
               >
-                <div className="h-full w-full bg-surface-container-high transition-transform duration-500 group-hover:scale-105" />
+                <Image
+                  src={item.image}
+                  alt={`${item.name} — ${item.category} project`}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[hsla(210,82%,15%,0.85)] to-transparent p-6 text-on-primary">
                   <div className="mb-1 text-label-large uppercase opacity-80">{item.category}</div>
                   <div className="text-title-medium font-semibold">{item.name}</div>
