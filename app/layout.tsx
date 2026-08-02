@@ -4,6 +4,7 @@ import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SmoothScroll from "@/components/ui/SmoothScroll";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -36,6 +37,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-screen flex-col">
         <MotionConfig reducedMotion="user">
+          <SmoothScroll />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
