@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Accordion from "@/components/ui/Accordion";
 import Reveal from "@/components/ui/Reveal";
+import PageHero from "@/components/ui/PageHero";
+import ExpandableCardGroup from "@/components/ui/ExpandableCardGroup";
+import Button from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -85,37 +88,36 @@ const faqItems = [
 export default function ServicesPage() {
   return (
     <div>
-      {/* Hero */}
-      <section className="py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-4">
-            <span className="inline-block rounded-sm bg-primary px-3 py-1 text-label-large uppercase text-on-primary">
-              Services &amp; Expertise
-            </span>
+      <PageHero
+        badge="Services &amp; Expertise"
+        title="Crafting the future of digital experiences."
+        description="We combine high-end editorial aesthetics with technical precision to build digital products that define industries and captivate audiences."
+        actions={[
+          { label: "Start your project", href: "/faq" },
+          {
+            label: (
+              <>
+                Explore our skills{" "}
+                <span className="inline-block transition-transform group-hover:translate-x-1.5">&rarr;</span>
+              </>
+            ),
+            href: "/portfolio",
+            variant: "secondary",
+          },
+        ]}
+        media={
+          <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+            <Image
+              src="/images/hero-services.jpg"
+              alt="Developer crafting digital products at a modern workspace"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+              priority
+            />
           </div>
-          <h1 className="mb-5 max-w-[700px] font-display text-display-large font-bold leading-tight tracking-tight text-primary">
-            Crafting the future of digital experiences.
-          </h1>
-          <p className="mb-8 max-w-[480px] text-body-large text-on-surface-variant">
-            We combine high-end editorial aesthetics with technical precision to build digital
-            products that define industries and captivate audiences.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="/faq"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary bg-primary px-8 py-4 text-body-large font-medium text-on-primary transition-all hover:bg-primary/90 hover:shadow-md"
-            >
-              Start your project
-            </a>
-            <a
-              href="/portfolio"
-              className="group inline-flex items-center justify-center gap-2 rounded-lg border-2 border-outline-variant px-8 py-4 text-body-large font-medium text-primary transition-all hover:border-primary hover:bg-primary/5"
-            >
-              Explore our skills <span className="inline-block transition-transform group-hover:translate-x-0.5">&rarr;</span>
-            </a>
-          </div>
-        </div>
-      </section>
+        }
+      />
 
       {/* Core Competencies */}
       <Reveal>
@@ -130,39 +132,12 @@ export default function ServicesPage() {
               ensuring your brand stands out in a crowded digital landscape.
             </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-2">
-            {competencies.map((comp) => (
-              <div
-                key={comp.title}
-                className="overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-elevation-3 hover:-translate-y-0.5"
-              >
-                <div className="p-8">
-                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-md bg-surface-container-high text-primary">
-                    {comp.icon}
-                  </div>
-                  <h3 className="mb-3 text-title-medium font-semibold text-on-surface">{comp.title}</h3>
-                  <p className="mb-5 text-body-medium text-on-surface-variant">{comp.text}</p>
-                  <ul className="mb-2 flex flex-col gap-2">
-                    {comp.items.map((item) => (
-                      <li key={item} className="flex items-center gap-2 text-body-medium text-on-surface">
-                        <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="relative aspect-[16/9] w-full">
-                  <Image
-                    src={comp.image}
-                    alt={comp.title}
-                    fill
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+          <ExpandableCardGroup
+            items={competencies}
+            gridClassName="grid items-stretch gap-8 md:grid-cols-2"
+            reveal
+            stagger={0.08}
+          />
         </div>
       </section>
       </Reveal>
@@ -210,12 +185,9 @@ export default function ServicesPage() {
                 vision.
               </p>
             </div>
-            <a
-              href="/faq"
-              className="inline-flex flex-shrink-0 items-center justify-center gap-2 rounded-lg border-2 border-primary bg-primary px-8 py-4 text-body-large font-medium text-on-primary transition-all hover:bg-primary/90 hover:shadow-md"
-            >
+            <Button href="/faq" size="lg" className="flex-shrink-0">
               Book a strategy call
-            </a>
+            </Button>
           </div>
         </div>
       </section>

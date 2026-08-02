@@ -18,7 +18,7 @@ export default function FormField({
   options,
 }: FormFieldProps) {
   const baseClass =
-    "rounded-md border border-outline-variant bg-surface-container-low px-4 py-3 text-body-medium transition-all focus:border-primary focus:bg-surface-container-lowest focus:shadow-[0_0_0_3px_hsla(210,82%,27%,0.1)] focus:outline-none";
+    "rounded-md border border-outline-variant bg-surface-container-low px-4 py-3 text-body-medium transition-all duration-200 focus:border-primary focus:bg-surface-container-lowest focus:scale-[1.01] focus:shadow-[0_0_0_3px_hsla(210,82%,27%,0.1)] focus:outline-none";
 
   return (
     <div className="flex flex-col gap-2">

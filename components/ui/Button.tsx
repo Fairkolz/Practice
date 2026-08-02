@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-type ButtonVariant = "primary" | "secondary" | "white" | "white-outline";
-type ButtonSize = "md" | "lg";
+export type ButtonVariant = "primary" | "secondary" | "white" | "white-outline";
+export type ButtonSize = "md" | "lg";
 
 interface ButtonProps {
   variant?: ButtonVariant;
@@ -9,12 +9,10 @@ interface ButtonProps {
   href?: string;
   className?: string;
   children: React.ReactNode;
-  [key: string]: unknown;
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary:
-    "border-2 border-primary bg-primary text-on-primary hover:bg-primary/90 hover:shadow-md",
+  primary: "border-2 border-primary bg-primary text-on-primary hover:bg-primary/90",
   secondary:
     "border-2 border-outline-variant text-primary hover:border-primary hover:bg-primary/5",
   white:
@@ -34,20 +32,19 @@ export default function Button({
   href,
   className = "",
   children,
-  ...props
 }: ButtonProps) {
-  const classes = `inline-flex items-center justify-center gap-2 font-medium transition-all ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
+  const classes = `group inline-flex items-center justify-center gap-2 font-medium transition-all duration-[250ms] hover:-translate-y-1 hover:shadow-elevation-2 active:scale-[0.97] ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
 
   if (href) {
     return (
-      <Link href={href} className={classes} {...props}>
+      <Link href={href} className={classes}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button className={classes} {...props}>
+    <button className={classes}>
       {children}
     </button>
   );

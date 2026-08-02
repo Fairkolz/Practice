@@ -42,6 +42,11 @@ next-env.d.ts
 
 # backup
 _backup/
+_backup_index.html
+
+# dev logs
+dev-server.log
+
 
 # old project subdirectory (to be deleted)
 forge-studio/

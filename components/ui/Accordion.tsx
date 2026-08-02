@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { EASE, EASE_IN_OUT } from "@/lib/motion";
 
 interface AccordionItem {
   id: string;
@@ -34,8 +35,8 @@ export default function Accordion({ items, className = "" }: AccordionProps) {
               <span>{item.question}</span>
               <motion.svg
                 animate={{ rotate: isOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-                className="h-5 w-5 flex-shrink-0 text-outline"
+                transition={{ duration: 0.35, ease: EASE }}
+                className="h-5 w-5 flex-shrink-0 text-outline transition-colors"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -48,10 +49,10 @@ export default function Accordion({ items, className = "" }: AccordionProps) {
               {isOpen && (
                 <motion.div
                   key="content"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  initial={{ height: 0, opacity: 0, y: -8 }}
+                  animate={{ height: "auto", opacity: 1, y: 0 }}
+                  exit={{ height: 0, opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: EASE_IN_OUT }}
                   className="overflow-hidden"
                 >
                   <div className="px-6 pb-5 text-body-medium leading-relaxed text-on-surface-variant">

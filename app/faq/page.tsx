@@ -2,8 +2,22 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import Accordion from "@/components/ui/Accordion";
 import Reveal from "@/components/ui/Reveal";
+import PageHero from "@/components/ui/PageHero";
+import FormField from "@/components/ui/FormField";
+import { EASE, fadeUp } from "@/lib/motion";
+
+const slideFromLeft = {
+  hidden: { opacity: 0, x: -24 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: EASE } },
+};
+
+const slideFromRight = {
+  hidden: { opacity: 0, x: 24 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: EASE } },
+};
 
 const faqGroups = [
   {
@@ -98,6 +112,35 @@ const faqGroups = [
 export default function FaqPage() {
   const [activeCategory, setActiveCategory] = useState("working");
   const [searchQuery, setSearchQuery] = useState("");
+  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "queued" | "error">("idle");
+
+  const formspreeEndpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!formspreeEndpoint) {
+      setFormStatus("error");
+      return;
+    }
+    const form = e.currentTarget;
+    setFormStatus("sending");
+    try {
+      const res = await fetch(formspreeEndpoint, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      const data = await res.json().catch(() => null);
+      if (res.ok && data?.ok) {
+        setFormStatus(data.status === "queued" ? "queued" : "success");
+        form.reset();
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
+  }
 
   const activeGroup = faqGroups.find((g) => g.id === activeCategory);
   const allItems = faqGroups.flatMap((g) => g.items);
@@ -112,19 +155,12 @@ export default function FaqPage() {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="py-16 text-center md:py-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <h1 className="mx-auto mb-5 max-w-[700px] font-display text-display-large font-bold leading-tight tracking-tight text-primary">
-            Common Questions &amp; Get in Touch
-          </h1>
-          <p className="mx-auto mb-10 max-w-[500px] text-body-large text-on-surface-variant">
-            Find everything you need to know about partnering with Forge Studio, or reach out
-            directly to start your project.
-          </p>
-
-          {/* Search */}
-          <div className="relative mx-auto max-w-[500px]">
+      <PageHero
+        center
+        title="Common Questions & Get in Touch"
+        description="Find everything you need to know about partnering with Forge Studio, or reach out directly to start your project."
+        footer={
+          <div className="relative w-full max-w-[500px]">
             <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-outline">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -139,16 +175,20 @@ export default function FaqPage() {
               className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest py-3 pl-12 pr-4 text-body-medium transition-all focus:border-primary focus:shadow-[0_0_0_3px_hsla(210,82%,27%,0.1)] focus:outline-none"
             />
           </div>
-        </div>
-      </section>
+        }
+      />
 
       {/* FAQ + Contact Combined */}
-      <Reveal>
       <section className="pb-24">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid gap-16 lg:grid-cols-[1fr_1fr] lg:items-start">
             {/* FAQ Column */}
-            <div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={fadeUp(40)}
+            >
               <h2 className="mb-8 font-display text-heading-large font-semibold text-on-surface">
                 Frequently Asked Questions
               </h2>
@@ -159,7 +199,7 @@ export default function FaqPage() {
                     <button
                       key={group.id}
                       onClick={() => setActiveCategory(group.id)}
-                      className={`flex items-center gap-2 rounded-md px-4 py-2 text-body-medium font-medium transition-all ${
+                      className={`flex items-center gap-2 rounded-md px-4 py-2 text-body-medium font-medium transition-all active:scale-[0.97] ${
                         activeCategory === group.id
                           ? "bg-primary text-on-primary"
                           : "bg-primary text-on-primary/80 hover:bg-primary/90"
@@ -192,98 +232,110 @@ export default function FaqPage() {
                   hello@forge.studio
                 </a>
               </div>
-            </div>
+            </motion.div>
 
             {/* Contact Form Column */}
             <div>
-              <h2 className="mb-8 font-display text-heading-large font-semibold text-on-surface">
-                Get in Touch
-              </h2>
-              <p className="mb-8 max-w-[480px] text-body-large text-on-surface-variant">
-                Ready to start your next project? Fill out the form and our team will get back to
-                you within 24 hours.
-              </p>
-
-              <form
-                className="space-y-5"
-                action={process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || "#"}
-                method="POST"
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-60px" }}
+                variants={slideFromLeft}
               >
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="name" className="text-body-medium font-medium">
-                    Name <span className="ml-0.5 text-error">*</span>
-                  </label>
-                  <input
-                    id="name"
-                    type="text"
+                <h2 className="mb-8 font-display text-heading-large font-semibold text-on-surface">
+                  Get in Touch
+                </h2>
+                <p className="mb-8 max-w-[480px] text-body-large text-on-surface-variant">
+                  Ready to start your next project? Fill out the form and our team will get back to
+                  you within 24 hours.
+                </p>
+
+                <form className="space-y-5" onSubmit={handleSubmit}>
+                  <FormField
+                    label="Name"
                     name="name"
+                    type="text"
                     required
                     placeholder="Your full name"
-                    className="rounded-md border border-outline-variant bg-surface-container-low px-4 py-3 text-body-medium transition-all focus:border-primary focus:bg-surface-container-lowest focus:shadow-[0_0_0_3px_hsla(210,82%,27%,0.1)] focus:outline-none"
                   />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="email" className="text-body-medium font-medium">
-                    Email <span className="ml-0.5 text-error">*</span>
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
+                  <FormField
+                    label="Email"
                     name="email"
+                    type="email"
                     required
                     placeholder="your@email.com"
-                    className="rounded-md border border-outline-variant bg-surface-container-low px-4 py-3 text-body-medium transition-all focus:border-primary focus:bg-surface-container-lowest focus:shadow-[0_0_0_3px_hsla(210,82%,27%,0.1)] focus:outline-none"
                   />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="service" className="text-body-medium font-medium">Service Interest</label>
-                  <select
-                    id="service"
+                  <FormField
+                    label="Service Interest"
                     name="service"
-                    className="rounded-md border border-outline-variant bg-surface-container-low px-4 py-3 text-body-medium transition-all focus:border-primary focus:bg-surface-container-lowest focus:shadow-[0_0_0_3px_hsla(210,82%,27%,0.1)] focus:outline-none"
-                  >
-                    <option value="">Select a service...</option>
-                    <option value="ui-ux">UI/UX Design</option>
-                    <option value="web-dev">Web Development</option>
-                    <option value="branding">Branding</option>
-                    <option value="product-design">Product Design</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="message" className="text-body-medium font-medium">
-                    Message <span className="ml-0.5 text-error">*</span>
-                  </label>
-                  <textarea
-                    id="message"
+                    type="select"
+                    placeholder="Select a service..."
+                    options={[
+                      { value: "ui-ux", label: "UI/UX Design" },
+                      { value: "web-dev", label: "Web Development" },
+                      { value: "branding", label: "Branding" },
+                      { value: "product-design", label: "Product Design" },
+                      { value: "other", label: "Other" },
+                    ]}
+                  />
+                  <FormField
+                    label="Message"
                     name="message"
+                    type="textarea"
                     required
                     rows={5}
                     placeholder="Tell us about your project..."
-                    className="min-h-[130px] resize-y rounded-md border border-outline-variant bg-surface-container-low px-4 py-3 text-body-medium transition-all focus:border-primary focus:bg-surface-container-lowest focus:shadow-[0_0_0_3px_hsla(210,82%,27%,0.1)] focus:outline-none"
                   />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full rounded-md border-none bg-primary px-8 py-4 text-label-large font-semibold uppercase text-on-primary transition-all hover:bg-primary/90 hover:shadow-md"
-                >
-                  Send Message
-                </button>
-              </form>
+                  <button
+                    type="submit"
+                    disabled={formStatus === "sending"}
+                    className="w-full rounded-md border-none bg-primary px-8 py-4 text-label-large font-semibold uppercase text-on-primary transition-all hover:bg-primary/90 hover:shadow-[0_0_28px_hsla(210,82%,40%,0.4)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {formStatus === "sending" ? "Sending..." : "Send Message"}
+                  </button>
+                  {formStatus === "success" && (
+                    <p className="text-body-medium text-secondary">
+                      Message sent successfully! We&apos;ll get back to you within 24 hours.
+                    </p>
+                  )}
+                  {formStatus === "queued" && (
+                    <p className="text-body-medium text-secondary">
+                      Message received! You&apos;re in our queue — we&apos;ll respond shortly.
+                    </p>
+                  )}
+                  {formStatus === "error" && (
+                    <p className="text-body-medium text-error">
+                      Something went wrong. Please try again or email us at hello@forge.studio.
+                    </p>
+                  )}
+                </form>
+              </motion.div>
 
               {/* Contact Info */}
-              <div className="mt-12 space-y-8">
-                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl">
+              <motion.div className="mt-12 space-y-8">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-60px" }}
+                  variants={slideFromRight}
+                  className="relative aspect-[16/10] w-full overflow-hidden rounded-xl"
+                >
                   <Image
                     src="/images/faq-office.jpg"
                     alt="Forge Studio office workspace"
                     fill
                     sizes="(min-width: 768px) 33vw, 100vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.03]"
                   />
-                </div>
+                </motion.div>
 
-                <div className="grid grid-cols-2 gap-8">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-60px" }}
+                  variants={fadeUp(40)}
+                  className="grid grid-cols-2 gap-8"
+                >
                   <div>
                     <h3 className="mb-4 text-title-small font-semibold underline underline-offset-4">
                       Office Hours
@@ -309,10 +361,14 @@ export default function FaqPage() {
                       Quick Connect
                     </h3>
                     {[
-                      { label: "hello@forge.studio", icon: "email" },
-                      { label: "+1 (800) FORGE-IT", icon: "phone" },
+                      { label: "hello@forge.studio", icon: "email", href: "mailto:hello@forge.studio" },
+                      { label: "+1 (800) FORGE-IT", icon: "phone", href: "tel:+18003674348" },
                     ].map((item) => (
-                      <div key={item.label} className="flex items-center gap-3">
+                      <a
+                        key={item.label}
+                        href={item.href}
+                        className="flex items-center gap-3 transition-colors hover:text-primary"
+                      >
                         <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-surface-container-high text-primary">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             {item.icon === "email" ? (
@@ -323,27 +379,35 @@ export default function FaqPage() {
                           </svg>
                         </div>
                         <span className="text-body-medium">{item.label}</span>
-                      </div>
+                      </a>
                     ))}
 
                     <div className="flex gap-3 pt-2">
-                      {["X", "In", "Be", "Dr"].map((s) => (
-                        <span
-                          key={s}
-                          className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-surface-container-high text-sm text-on-surface-variant transition-colors hover:bg-primary hover:text-on-primary"
+                      {[
+                        { label: "X", href: "https://x.com" },
+                        { label: "In", href: "https://www.linkedin.com" },
+                        { label: "Be", href: "https://www.behance.net" },
+                        { label: "Dr", href: "https://dribbble.com" },
+                      ].map((s) => (
+                        <a
+                          key={s.label}
+                          href={s.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={s.label}
+                          className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-container-high text-sm text-on-surface-variant transition-colors hover:bg-primary hover:text-on-primary"
                         >
-                          {s}
-                        </span>
+                          {s.label}
+                        </a>
                       ))}
                     </div>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </div>
       </section>
-      </Reveal>
 
       {/* Global Presence */}
       <Reveal>
@@ -357,10 +421,10 @@ export default function FaqPage() {
           </p>
           <div className="grid gap-6 md:grid-cols-4">
             {[
-              { city: "New York", tag: "Headquarters" },
-              { city: "London", tag: "European Hub" },
-              { city: "Singapore", tag: "Asia Pacific" },
-              { city: "Dubai", tag: "Middle East" },
+              { city: "New York", tag: "Headquarters", address: "4525 Times Square Tower, 7th Avenue & W 44th St, New York, NY 10036, USA" },
+              { city: "London", tag: "European Hub", address: "88 Shoreditch High Street, London EC2A 3SE, United Kingdom" },
+              { city: "Singapore", tag: "Asia Pacific", address: "9 Raffles Place, #29-01 Republic Plaza, Singapore 048619" },
+              { city: "Dubai", tag: "Middle East", address: "Boulevard Plaza Tower One, Level 14, Downtown Dubai, UAE" },
             ].map((loc) => (
               <div
                 key={loc.city}
@@ -372,7 +436,8 @@ export default function FaqPage() {
                   </svg>
                 </div>
                 <h3 className="mb-1 text-title-medium font-semibold text-on-surface">{loc.city}</h3>
-                <p className="text-body-medium text-on-surface-variant">{loc.tag}</p>
+                <p className="mb-3 text-label-large uppercase text-primary">{loc.tag}</p>
+                <p className="text-body-medium text-on-surface-variant">{loc.address}</p>
               </div>
             ))}
           </div>
